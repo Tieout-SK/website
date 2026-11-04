@@ -5,8 +5,8 @@ export const site = {
   name: "Tieout",
 
   // The live address, with https:// and no trailing slash. Used for SEO tags
-  // and social previews. Change to https://tieoutai.org once the domain is connected.
-  url: "https://tieoutai.netlify.app",
+  // and social previews.
+  url: "https://tieoutai.org",
 
   // Shared inbox for enquiries: a Google Group in Workspace that delivers to both founders.
   contactEmail: "hello@tieoutai.org",

@@ -1,0 +1,9 @@
+# Tells Netlify how to build the site. Netlify's Next.js runtime picks up the
+# .next output and serves the pages and the early access API route.
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"

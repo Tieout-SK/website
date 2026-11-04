@@ -1,20 +1,7 @@
-// ============================================================================
-// PLUG IN HERE: where early access requests are saved.
-//
-// This is a stub. Replace the body of saveEarlyAccess() with one of:
-//   Formspree: POST the fields to your form endpoint (see README).
-//   Resend:    send yourself an email with the fields (see README).
-//   Database:  insert a row (Postgres, Supabase, Neon, etc.).
-// Keep the function signature the same and nothing else needs to change.
-//
-// What the stub does now:
-//   In development (npm run dev): appends each request to .data/early-access.jsonl
-//              (git-ignored, because it contains personal details).
-//   Hosted (Netlify or any production build): the file system isn't writable,
-//              so it only logs the request. You can read it in Netlify under
-//              Logs > Functions, but logs expire. Swap in a real destination
-//              before you launch.
-// ============================================================================
+// Local development only. The live site sends early access requests to
+// Netlify Forms (see components/EarlyAccessForm.tsx and the README).
+// Here, each request is appended to .data/early-access.jsonl (git-ignored,
+// because it contains personal details).
 
 import { appendFile, mkdir } from "node:fs/promises";
 import path from "node:path";

@@ -19,14 +19,16 @@ Open http://localhost:3000.
 ./
   lib/
     copy.ts            All the words on the site. Edit copy here.
-    site.ts            Domain, email, LinkedIn, founders, SEO title and description. PLACEHOLDERS live here.
-    store.ts           Where early access requests are saved. PLUG IN HERE.
-    early-access.ts    Form fields and validation (shared by the form and the API).
+    site.ts            Domain, email, LinkedIn, founders, SEO title and description.
+    store.ts           Local-development stand-in for saving early access requests.
+    early-access.ts    Form fields and validation.
+  public/
+    __forms.html       Registers the early access form with Netlify Forms. Not a visible page.
   app/
     layout.tsx         Fonts, header, footer, SEO and social tags for every page
     page.tsx           Landing page: puts the sections in order
     about/page.tsx     About page
-    api/early-access/route.ts   Receives the form and calls store.ts
+    api/early-access/route.ts   Receives the form in local development only
     globals.css        Colors and fonts (the accent color is --color-accent)
     icon.svg           Favicon (PLACEHOLDER)
     opengraph-image.tsx  Image shown when the link is shared on LinkedIn, Slack, etc.
@@ -50,50 +52,22 @@ Search the project for `PLACEHOLDER`:
 
 | What | Where |
 | --- | --- |
-| Domain | `lib/site.ts` (`url`) |
-| Contact email | `lib/site.ts` (`contactEmail`) |
 | LinkedIn URL | `lib/site.ts` (`linkedinUrl`) |
 | Logo | `components/Logo.tsx` (instructions in the file) |
 | Favicon | `app/icon.svg` |
 
-## Early access form: connecting a real destination
+## Early access form
 
-Right now `lib/store.ts` saves requests to `.data/early-access.jsonl` on your computer (git-ignored). When hosted it only writes them to the function logs, which expire. **Connect one of these before you share the site.** Change only the body of `saveEarlyAccess()` in `lib/store.ts`.
+On the live site, requests go to **Netlify Forms**. Netlify stores every submission (Netlify > Forms > early-access) and can email each one to you. The free plan includes 100 submissions a month, and Netlify filters spam. There's also a hidden spam trap field.
 
-**Formspree** (simplest, no code beyond this): create a form at formspree.io, copy its endpoint, add it in Netlify (Site configuration > Environment variables) as `FORMSPREE_ENDPOINT`, then:
+One-time setup in Netlify:
 
-```ts
-export async function saveEarlyAccess(request: EarlyAccessRequest): Promise<void> {
-  const res = await fetch(process.env.FORMSPREE_ENDPOINT!, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify(request),
-  });
-  if (!res.ok) throw new Error(`Formspree returned ${res.status}`);
-}
-```
+1. **Forms > Enable form detection**, then trigger a new deploy (Deploys > Trigger deploy) so Netlify finds the form.
+2. **Project configuration > Notifications > Emails and webhooks > Form submission notifications > Add notification > Email notification.** Send to `hello@tieoutai.org`, for form `early-access`.
 
-**Resend** (emails each request to you): `npm install resend`, verify your domain in Resend, add `RESEND_API_KEY` in Netlify's environment variables, then:
+If you add or rename a field, change it in both `components/EarlyAccessForm.tsx` and `public/__forms.html`.
 
-```ts
-import { Resend } from "resend";
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export async function saveEarlyAccess(r: EarlyAccessRequest): Promise<void> {
-  const { error } = await resend.emails.send({
-    from: "Tieout site <site@your-domain.com>",
-    to: "hello@your-domain.com",
-    replyTo: r.email,
-    subject: `Early access: ${r.name}, ${r.company}`,
-    text: Object.entries(r).map(([k, v]) => `${k}: ${v}`).join("\n"),
-  });
-  if (error) throw new Error(error.message);
-}
-```
-
-**Database:** insert `request` as a row (Neon, Supabase or any Postgres). Same function, same signature.
-
-The form already has a hidden spam trap. If spam becomes a problem, add rate limiting or a CAPTCHA service in `app/api/early-access/route.ts`.
+In local development (`npm run dev`), the form posts to `app/api/early-access/route.ts` instead, which saves to `.data/early-access.jsonl` (git-ignored).
 
 ## Deploy on Netlify
 

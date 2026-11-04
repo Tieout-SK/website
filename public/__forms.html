@@ -1,0 +1,23 @@
+<!doctype html>
+<!--
+  Not a page anyone visits. Netlify reads this file at deploy time to register
+  the "early-access" form, and the site's form posts its data here.
+  Keep the field names in step with components/EarlyAccessForm.tsx.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Forms</title>
+  </head>
+  <body>
+    <form name="early-access" data-netlify="true" netlify-honeypot="website" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="company" />
+      <input type="text" name="role" />
+      <textarea name="reconcile"></textarea>
+      <input type="text" name="website" />
+    </form>
+  </body>
+</html>

@@ -40,6 +40,28 @@ function Field({
   );
 }
 
+// On the live site, requests go to Netlify Forms, which stores them and emails
+// a notification (set up under Netlify > Forms). Netlify finds the form from
+// public/__forms.html, so keep its fields in step with the ones below.
+// In local development, requests go to the stub API route instead.
+async function submit(data: EarlyAccessRequest & { website: string }): Promise<boolean> {
+  if (process.env.NODE_ENV === "production") {
+    const body = new URLSearchParams({ "form-name": "early-access", ...data });
+    const res = await fetch("/__forms.html", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: body.toString(),
+    });
+    return res.ok;
+  }
+  const res = await fetch("/api/early-access", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return res.ok;
+}
+
 export function EarlyAccessForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Errors>({});
@@ -60,17 +82,11 @@ export function EarlyAccessForm() {
     setErrors({});
     setStatus("sending");
     try {
-      const res = await fetch("/api/early-access", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...parsed.data, website: values.website ?? "" }),
-      });
-      const json = (await res.json().catch(() => ({}))) as { ok?: boolean; errors?: Errors };
-      if (res.ok && json.ok) {
+      const ok = await submit({ ...parsed.data, website: String(values.website ?? "") });
+      if (ok) {
         setStatus("sent");
         form.reset();
       } else {
-        if (json.errors) setErrors(json.errors);
         setStatus("failed");
       }
     } catch {

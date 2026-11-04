@@ -29,9 +29,10 @@ export function Header() {
           </Link>
           <Link
             href="/#early-access"
-            className="rounded-md bg-accent px-3 py-2 text-sm font-medium text-white hover:bg-accent-dark sm:px-4"
+            className="whitespace-nowrap rounded-md bg-accent px-3 py-2 text-sm font-medium text-white hover:bg-accent-dark sm:px-4"
           >
-            Request early access
+            <span className="min-[360px]:hidden">Early access</span>
+            <span className="hidden min-[360px]:inline">Request early access</span>
           </Link>
         </nav>
       </div>

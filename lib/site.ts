@@ -4,12 +4,12 @@
 export const site = {
   name: "Tieout",
 
-  // PLACEHOLDER: your live domain, with https:// and no trailing slash.
-  // Used for SEO tags and social previews.
-  url: "https://your-domain.com",
+  // The live address, with https:// and no trailing slash. Used for SEO tags
+  // and social previews. Change to https://tieoutai.org once the domain is connected.
+  url: "https://tieoutai.netlify.app",
 
-  // PLACEHOLDER: the inbox that should receive enquiries.
-  contactEmail: "hello@your-domain.com",
+  // Shared inbox for enquiries: a Google Group in Workspace that delivers to both founders.
+  contactEmail: "hello@tieoutai.org",
 
   // PLACEHOLDER: the company LinkedIn page.
   linkedinUrl: "https://www.linkedin.com/company/your-company",

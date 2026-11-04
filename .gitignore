@@ -7,3 +7,4 @@ next-env.d.ts
 .env*.local
 # Early access submissions saved locally by the stub. They contain personal data.
 .data
+.netlify

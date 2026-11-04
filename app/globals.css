@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
+
+  /* The one accent color. Change it here and it updates everywhere. */
+  --color-accent: #1d4ed8;
+  --color-accent-dark: #1e40af;
+  --color-accent-soft: #eff4ff;
+
+  --color-ink: #0f172a;
+  --color-muted: #475569;
+  --color-line: #e2e8f0;
+  --color-wash: #f8fafc;
+
+  --color-ok: #15803d;
+  --color-ok-soft: #ecfdf3;
+  --color-warn: #8a4205;
+  --color-warn-soft: #fff7eb;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Sections reached from the header links leave room for the sticky header. */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

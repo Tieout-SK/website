@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+.vercel
+.env*.local
+# Early access submissions saved locally by the stub. They contain personal data.
+.data

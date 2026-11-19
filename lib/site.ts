@@ -6,13 +6,13 @@ export const site = {
 
   // The live address, with https:// and no trailing slash. Used for SEO tags
   // and social previews.
-  url: "https://tieoutai.org",
+  url: "https://tieoutai.io",
 
   // Shared inbox for enquiries: a Google Group in Workspace that delivers to both founders.
-  contactEmail: "hello@tieoutai.org",
+  contactEmail: "hello@tieoutai.io",
 
-  // PLACEHOLDER: the company LinkedIn page.
-  linkedinUrl: "https://www.linkedin.com/company/your-company",
+  // The company LinkedIn page.
+  linkedinUrl: "https://www.linkedin.com/company/tieoutai",
 
   title: "Tieout | Recurring financial workflows, automated",
   description:

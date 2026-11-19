@@ -12,3 +12,16 @@
 [build.environment]
   NODE_VERSION = "22"
   NEXT_TELEMETRY_DISABLED = "1"
+
+# Send the old .org domain to the new primary domain.
+[[redirects]]
+  from = "https://tieoutai.org/*"
+  to = "https://tieoutai.io/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.tieoutai.org/*"
+  to = "https://tieoutai.io/:splat"
+  status = 301
+  force = true
